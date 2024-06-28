@@ -1,9 +1,10 @@
-/* Register Page CSS */
+/* Profile Page CSS */
 
 body {
     font-family: "Playwrite RO", cursive;
     background-color: #ffd4f9;
     color: #ffffff;
+    margin: 0;
 }
 
 header {
