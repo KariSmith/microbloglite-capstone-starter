@@ -1,1 +1,14 @@
 /* Landing Page CSS */
+
+body {
+    font-family: "Playwrite RO", cursive;
+    background-color: #ffd4f9;
+    color: #ffffff;
+}
+header {
+    background: linear-gradient(#cc00ff, #ff00bf, #fcef3d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-style: italic;
+    font-size: 50px;
+}

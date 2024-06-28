@@ -8,9 +8,7 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
+    
 
     <!-- Global CSS (CSS rules you want applied to all pages) -->
     <link rel="stylesheet" href="./global.css">
@@ -25,17 +23,28 @@
     <script>
         //if (isLoggedIn() === true) window.location.replace("/posts");
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+RO:wght@100..400&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <header>
-        <h1>Welcome to <code>YOUR MICROBLOG NETWORK</code></h1>
-        <a href="./register/index.html">Register</a>
+        <h1>Welcome to the Pretty Cure Blog!</h1>
     </header>
+    <p>Are you a Wanderful person that enjoys the Pretty Cure series and would like to connect with others?
+    <br>If so, welcome to the place where you can talk about all things Pretty Cure till your heart blooms!
+    
+        <!--'Wanderful' is not a typo. Wan is the japanese word for the sound a dog makes.
+            The newest season is based on animals and animal puns are used frequently.'-->
+        <br>
+       Sign up today to get started!
+       <br>
+       Already a member? Login to see what's new</p>
 
     <main>
         <div id="errorMessage"></div>
-        <form id="login">
+        <form class="login">
             <div>
                 <label for="username">Username</label>
                 <input type="text" id="username" minlength="1">
@@ -56,5 +65,9 @@
     
 </body>
 <!-- Page-specific code -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous">
+</script>
     <script src="./landing.js"></script>
 </html>

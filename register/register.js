@@ -1,27 +1,56 @@
+"use strict";
 
-// curl -X 'POST' \
-//   'http://microbloglite.us-east-2.elasticbeanstalk.com/api/users' \
-//   -H 'accept: application/json' \
-//   -H 'Content-Type: application/json' \
-//   -d '{
-//   "username": "kevinelong",
-//   "fullName": "Kevin Ernest Long",
-//   "password": "S!mpl312"
-// }'
+const signupForm = document.querySelector(".signup");
 
-function register() {
-    return fetch(apiBaseURL + "/api/users", {
+signupForm.onsubmit = function (event) {
+    event.preventDefault();
+
+    const signupData = {
+        username: signupForm.username.value,
+        fullName: signupForm.fullname.value,
+        password: signupForm.password.value
+    }
+
+    signupForm.signupButton.disabled = true;
+    
+    registerUser(signupData);
+}
+
+function registerUser(signupData) {
+    const options = {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         },
-        body: JSON.stringify({
-            username: username.value,
-            fullName: fullname.value,
-            password: password.value
-        })
-    }).then(() => location = "/"); //TODO check for failure
-}
+        body: JSON.stringify(signupData),
+    };
 
-registerButton.addEventListener("click", register)
+    return fetch(apiBaseURL + "/api/users", options)
+        .then(response => response.json())
+        .then(registerData => {
+            if (registerData.hasOwnProperty("message")) {
+                console.error(registerData);
+                displayRegistrationError(registerData.message);
+                return null;
+            }
+
+            console.log("User registered successfully:", registerData);
+
+            window.localStorage.setItem("login-data", JSON.stringify(registerData));
+            window.location.assign("../mb_pages/posts.html"); // redirect
+
+            return registerData;
+        })
+        .catch(error => {
+            console.error("Network or server error:", error);
+            displayRegistrationError("Unable to connect.");
+        });
+}
+function displayRegistrationError(message) {
+    const errorElement = document.getElementById("registration-error");
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+    }
+}

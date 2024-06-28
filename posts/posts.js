@@ -1,80 +1,91 @@
-/* Posts Page JavaScript */
-
 "use strict";
-// curl -X 'POST' \
-//   'http://microbloglite.us-east-2.elasticbeanstalk.com/api/posts' \
-//   -H 'accept: application/json' \
-//   -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtldmluZWxvbmciLCJpYXQiOjE3MTg5OTA5MTgsImV4cCI6MTcxOTA3NzMxOH0.Kk6YxYzdAaagLSu0az1Jfz7nQ3k23ayIdW3vnpNbwIo' \
-//   -H 'Content-Type: application/json' \
-//   -d '{
-//   "text": "string"
-// }'
-function like(postId){
-    fetch(apiBaseURL + "/api/likes", {
-        method: "POST",
-        headers: {
-            accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.token
-        },
-        body: JSON.stringify({
-            postId: postId
-        })
-    }).then(response => {
-        console.log(response);
-        location = "/posts/";  //force refresh
-    });
-}
 
-buttonPostMessage.addEventListener("click", e => {
-    fetch(apiBaseURL + "/api/posts", {
-        method: "POST",
-        headers: {
-            accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.token
-        },
-        body: JSON.stringify({
-            text: messageElement.value
+document.addEventListener("DOMContentLoaded", function () {
+    const apiBaseURL = "http://microbloglite.us-east-2.elasticbeanstalk.com";
+    const postsSection = document.querySelector("#posts");
+    const messageTextarea = document.getElementById("message");
+    const submitButton = document.querySelector(".submitbutton input[type='submit']");
+
+    // Fetch and display posts
+    function fetchPosts() {
+        const loginData = getLoginData();
+        if (!loginData.token) {
+            console.error("No authorization token found.");
+            postsSection.innerHTML = '<p>Please log in to view posts.</p>';
+            return;
+        }
+
+        fetch(apiBaseURL + "/api/posts", {
+            headers: {
+                "Authorization": `Bearer ${loginData.token}`
+            }
         })
-    }).then(response => {
-        console.log(response);
-        location = "/posts/";  //force refresh
+            .then(response => response.json())
+            .then(posts => {
+                postsSection.innerHTML = '';
+                posts.forEach(post => {
+                    const postElement = document.createElement("div");
+                    postElement.className = "post";
+                    postElement.innerHTML = `
+                    <div class="block box-shadow-animation">
+                        <h2 class="block-tex color-animation">${post.username}</h2>
+                        <p class="block-text">${post.text}</p>
+                    </div>
+                    <hr>`;
+                    postsSection.appendChild(postElement);
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching posts:", error);
+                postsSection.innerHTML = '<p>Failed to load posts.</p>';
+            });
+    }
+
+    // Post a new message
+    function postMessage() {
+        const loginData = getLoginData(); // Retrieve login data
+        if (!loginData.token) {
+            console.error("No authorization token found.");
+            alert("You must be logged in to post a message.");
+            return;
+        }
+
+        const message = messageTextarea.value.trim();
+        if (!message) {
+            alert("Message cannot be empty.");
+            return;
+        }
+
+        const postData = {
+            text: message
+        };
+
+        fetch(apiBaseURL + "/api/posts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${loginData.token}`
+            },
+            body: JSON.stringify(postData)
+        })
+        .then(response => response.json())
+        .then(post => {
+            console.log("Post created successfully:", post);
+            messageTextarea.value = ''; // Clear the textarea
+            fetchPosts(); // Refresh the posts
+        })
+        .catch(error => {
+            console.error("Error posting message:", error);
+            alert("Failed to post message.");
+        });
+    }
+    // Event listener for the submit button
+    submitButton.addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent form submission
+        postMessage();
     });
+
+    fetchPosts();
 });
 
-function getMessage(message) {
-    return /*html*/`
-    <div class="message">
-        <h1>${message.text}</h1>
-        <div class="username">${message.username}</div>
-        <div class="createdAt">${message.createdAt}</div>
-        <div class="ID:">${message._id}</div>
-        <div class="Likes:">${message.likes.length} Likes 
-            <button onclick="like('${message._id}')">Like</button>
-        </div>
-    </div>
-    <hr>`;
-}
-function showMessages(messages) {
-    if(messages.hasOwnProperty("message")){
-        location = "/";
-        return;
-    }
-    messagesOutput.innerHTML = messages.map(getMessage).join("");
-}
-
-fetch(apiBaseURL + "/api/posts", {
-    method: "GET",
-    // mode: "no-cors", // cors, no-cors, *cors, same-origin
-    // credentials: "omit", // include, *same-origin, omit
-    headers: { Authorization: `Bearer ${localStorage.token}` }
-}).then(response => {
-    if (response.statusCode >= 400) {
-        console.log(response);
-        location = "/";
-    }
-    return response.json()
-}).then(data=>{
-    showMessages(data);
-});
+```
