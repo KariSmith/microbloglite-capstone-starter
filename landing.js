@@ -13,6 +13,6 @@ loginForm.onsubmit = function (event) {
     }
 
     loginForm.loginButton.disabled = true;
-    
+
     login(loginData);
 }

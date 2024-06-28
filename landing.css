@@ -7,6 +7,7 @@ body {
     font-size: 30px;
     text-align: center;
 }
+
 header {
     background: linear-gradient(#cc00ff, #ff00bf, #fcef3d);
     -webkit-background-clip: text;

@@ -13,7 +13,7 @@ btnProfile.addEventListener("click", () => {
     });
 });
 
-function showProfile(data){
+function showProfile(data) {
     bioElement.innerHTML = data.bio;
     bioInput.value = data.bio;
 }
@@ -25,6 +25,6 @@ fetch(apiBaseURL + "/api/users/" + localStorage.username, {
         location = "/";
     }
     return response.json()
-}).then(data=>{
+}).then(data => {
     showProfile(data);
 });
