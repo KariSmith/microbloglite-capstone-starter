@@ -68,16 +68,16 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             body: JSON.stringify(postData)
         })
-        .then(response => response.json())
-        .then(post => {
-            console.log("Post created successfully:", post);
-            messageTextarea.value = ''; // Clear the text area
-            fetchPosts(); // Refresh the posts
-        })
-        .catch(error => {
-            console.error("Error posting message:", error);
-            alert("Failed to post message.");
-        });
+            .then(response => response.json())
+            .then(post => {
+                console.log("Post created successfully:", post);
+                messageTextarea.value = ''; // Clear the text area
+                fetchPosts(); // Refresh the posts
+            })
+            .catch(error => {
+                console.error("Error posting message:", error);
+                alert("Failed to post message.");
+            });
     }
     // Event listener for the submit button
     submitButton.addEventListener("click", function (event) {

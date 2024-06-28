@@ -12,7 +12,7 @@ const apiBaseURL = "http://microbloglite.us-east-2.elasticbeanstalk.com";
 // You can use this function to get the login data of the logged-in
 // user (if any). It returns either an object including the username
 // and token, or an empty object if the visitor is not logged in.
-function getLoginData () {
+function getLoginData() {
     const loginJSON = window.localStorage.getItem("login-data");
     return JSON.parse(loginJSON) || {};
 }
@@ -20,7 +20,7 @@ function getLoginData () {
 
 // You can use this function to see whether the current visitor is
 // logged in. It returns either `true` or `false`.
-function isLoggedIn () {
+function isLoggedIn() {
     const loginData = getLoginData();
     return Boolean(loginData.token);
 }
@@ -30,9 +30,9 @@ function isLoggedIn () {
 // landing page, in order to process a user's login. READ this code,
 // and feel free to re-use parts of it for other `fetch()` requests
 // you may need to write.
-function login (loginData) {
+function login(loginData) {
     // POST /auth/login
-    const options = { 
+    const options = {
         method: "POST",
         headers: {
             // This header specifies the type of content we're sending.
@@ -66,13 +66,13 @@ function login (loginData) {
 // which you may include in various pages in your app. Again, READ this
 // function and you will probably want to re-use parts of it for other
 // `fetch()` requests you may need to write.
-function logout () {
+function logout() {
     const loginData = getLoginData();
 
     // GET /auth/logout
-    const options = { 
+    const options = {
         method: "GET",
-        headers: { 
+        headers: {
             // This header is how we authenticate our user with the
             // server for any API requests which require the user
             // to be logged-in in order to have access.
@@ -96,20 +96,9 @@ function logout () {
 
 document.addEventListener("DOMContentLoaded", function () {
     if (isLoggedIn()) {
-        const nav = document.querySelector("logout");
+        const nav = document.querySelector(".logoutbttn");
         const logoutButton = document.createElement("button");
-        logoutButton.innerHTML = '<a href="/microbloglite-capstone-starter/index.html" id="logoutButton">Logout</a>';
-        nav.appendChild(logoutButton);
-
-        document.getElementById("logoutButton").addEventListener("click", function (event) {
-            event.preventDefault();
-            logout();
-        });
-    }
-    if (isLoggedIn()) {
-        const nav = document.querySelector(".menubar ul");
-        const logoutButton = document.createElement("li");
-        logoutButton.innerHTML = '<a href="/microbloglite-capstone-starter/index.html" id="logoutButton">Logout</a>';
+        logoutButton.innerHTML = '<a href="/microbloglite-capstone-starter/index.html" id="logoutButton" style="">Logout</a>';
         nav.appendChild(logoutButton);
 
         document.getElementById("logoutButton").addEventListener("click", function (event) {
@@ -128,7 +117,7 @@ function registerUser(signupData) {
         },
         body: JSON.stringify(signupData),
     };
-    
+
 
     return fetch(apiBaseURL + "/api/users", options)
         .then(response => response.json())
