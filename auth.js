@@ -55,7 +55,7 @@ function login (loginData) {
             }
 
             window.localStorage.setItem("login-data", JSON.stringify(loginData));
-            window.location.assign("/posts");  // redirect
+            window.location.assign("/microbloglite-capstone-starter/posts/index.html");  // redirect
 
             return loginData;
         });
@@ -92,4 +92,44 @@ function logout () {
             window.localStorage.removeItem("login-data");  // remove login data from LocalStorage
             window.location.assign("/");  // redirect back to landing page
         });
+}
+
+function registerUser(signupData) {
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+        },
+        body: JSON.stringify(signupData),
+    };
+    
+
+    return fetch(apiBaseURL + "/api/users", options)
+        .then(response => response.json())
+        .then(registerData => {
+            if (registerData.hasOwnProperty("message")) {
+                console.error(registerData);
+                displayRegistrationError(registerData.message);
+                return null;
+            }
+
+            console.log("User registered successfully:", registerData);
+
+            window.localStorage.setItem("login-data", JSON.stringify(registerData));
+            window.location.assign("/microbloglite-capstone-starter/posts/index.html"); // redirect
+
+            return registerData;
+        })
+        .catch(error => {
+            console.error("Network or server error:", error);
+            displayRegistrationError("Unable to connect.");
+        });
+}
+function displayRegistrationError(message) {
+    const errorElement = document.getElementById("registration-error");
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+    }
 }

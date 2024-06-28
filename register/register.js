@@ -38,7 +38,7 @@ function registerUser(signupData) {
             console.log("User registered successfully:", registerData);
 
             window.localStorage.setItem("login-data", JSON.stringify(registerData));
-            window.location.assign("../mb_pages/posts.html"); // redirect
+            window.location.assign("/microbloglite-capstone-starter/posts/index.html"); // redirect
 
             return registerData;
         })
