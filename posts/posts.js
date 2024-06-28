@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const apiBaseURL = "http://microbloglite.us-east-2.elasticbeanstalk.com";
     const postsSection = document.querySelector("#messagesOutput");
     const messageTextarea = document.getElementById("messageElement");
-    const submitButton = document.querySelector(".buttonPostMessage input[type='submit']");
+    const submitButton = document.querySelector("#buttonPostMessage");
 
     // Fetch and display posts
     function fetchPosts() {

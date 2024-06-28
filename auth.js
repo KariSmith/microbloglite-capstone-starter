@@ -90,9 +90,34 @@ function logout () {
             // error with the fetch request above.
 
             window.localStorage.removeItem("login-data");  // remove login data from LocalStorage
-            window.location.assign("/");  // redirect back to landing page
+            window.location.assign("/microbloglite-capstone-starter/index.html");  // redirect back to landing page
         });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    if (isLoggedIn()) {
+        const nav = document.querySelector("logout");
+        const logoutButton = document.createElement("button");
+        logoutButton.innerHTML = '<a href="/microbloglite-capstone-starter/index.html" id="logoutButton">Logout</a>';
+        nav.appendChild(logoutButton);
+
+        document.getElementById("logoutButton").addEventListener("click", function (event) {
+            event.preventDefault();
+            logout();
+        });
+    }
+    if (isLoggedIn()) {
+        const nav = document.querySelector(".menubar ul");
+        const logoutButton = document.createElement("li");
+        logoutButton.innerHTML = '<a href="/microbloglite-capstone-starter/index.html" id="logoutButton">Logout</a>';
+        nav.appendChild(logoutButton);
+
+        document.getElementById("logoutButton").addEventListener("click", function (event) {
+            event.preventDefault();
+            logout();
+        });
+    }
+});
 
 function registerUser(signupData) {
     const options = {
