@@ -18,7 +18,7 @@ A mini web blog with girly aestheic where posts can be seen and made by a logged
 
 My favorite part of this project is how we got to post a message to the blog.
 
-function postMessage() {
+    function postMessage() {
         const loginData = getLoginData(); // Retrieve login data
         if (!loginData.token) {
             console.error("No authorization token found.");
@@ -62,6 +62,6 @@ function postMessage() {
     });
 
     fetchPosts();
-});
+    });
 
 I've always wondered how it was done.
