@@ -2,9 +2,9 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     const apiBaseURL = "http://microbloglite.us-east-2.elasticbeanstalk.com";
-    const postsSection = document.querySelector("#posts");
-    const messageTextarea = document.getElementById("message");
-    const submitButton = document.querySelector(".submitbutton input[type='submit']");
+    const postsSection = document.querySelector("#messagesOutput");
+    const messageTextarea = document.getElementById("messageElement");
+    const submitButton = document.querySelector(".buttonPostMessage input[type='submit']");
 
     // Fetch and display posts
     function fetchPosts() {
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(post => {
             console.log("Post created successfully:", post);
-            messageTextarea.value = ''; // Clear the textarea
+            messageTextarea.value = ''; // Clear the text area
             fetchPosts(); // Refresh the posts
         })
         .catch(error => {
@@ -87,5 +87,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fetchPosts();
 });
-
-```

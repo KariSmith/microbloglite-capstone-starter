@@ -4,6 +4,8 @@ body {
     font-family: "Playwrite RO", cursive;
     background-color: #ffd4f9;
     color: #ffffff;
+    font-size: 30px;
+    text-align: center;
 }
 
 header {
